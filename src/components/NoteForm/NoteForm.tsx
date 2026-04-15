@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { createNote } from '../../services/noteService';
 import css from './NoteForm.module.css';
 
-interface NoteformPropsCloseModal {
+interface NoteFormProps {
   onClose: () => void;
 }
 
@@ -35,7 +35,7 @@ const initialValues: NoteFormValues = {
   tag: '',
 };
 
-export default function NoteForm({ onClose }: NoteformPropsCloseModal) {
+export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: createNote,

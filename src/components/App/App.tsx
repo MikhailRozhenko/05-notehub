@@ -6,6 +6,7 @@ import { fetchNotes } from '../../services/noteService';
 import Errorbox from '../ErrorMessage/Errorbox';
 import Loader from '../Loader/Loader';
 import Modal from '../Modal/Modal';
+import NoteForm from '../NoteForm/NoteForm';
 import NoteList from '../NoteList/NoteList';
 import Pagination from '../Pagination/Pagination';
 import SearchBox from '../SearchBox/SearchBox';
@@ -19,7 +20,10 @@ export default function App() {
 
   const [page, setPage] = useState(1);
 
-  const handleChange = useDebouncedCallback(setSearch, 1000);
+  const handleChange = useDebouncedCallback((value: string) => {
+    setSearch(value);
+    setPage(1);
+  }, 1000);
 
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ['notes', page, search],
@@ -62,7 +66,11 @@ export default function App() {
           <NoteList notes={data.notes} />
         )}
 
-        {isModalOpen && <Modal onEnd={closeModal} />}
+        {isModalOpen && (
+          <Modal onEnd={closeModal}>
+            <NoteForm onClose={closeModal} />
+          </Modal>
+        )}
       </div>
     </>
   );
